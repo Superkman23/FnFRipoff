@@ -116,7 +116,6 @@ public class LevelManager : MonoBehaviour
     {
       if (input[i])
       {
-        _PlayerArrows[i]._Renderer.color = _PressedColor;
         _PlayerArrows[i]._PressedTime += Time.deltaTime;
       }
       else
@@ -125,7 +124,6 @@ public class LevelManager : MonoBehaviour
         {
           MissNote(_HealthPerMiss / 2);
         }
-        _PlayerArrows[i]._Renderer.color = _UnpressedColor;
         _PlayerArrows[i]._PressedTime = 0;
         _PlayerArrows[i]._HitThisPress = false;
       }

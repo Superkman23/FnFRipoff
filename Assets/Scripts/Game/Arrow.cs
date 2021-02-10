@@ -8,8 +8,23 @@ public class Arrow : MonoBehaviour
   public float _PressedTime = 0;
   public bool _HitThisPress = false;
 
+  public Color _PressedColor;
+  public Color _UnpressedColor;
+
   private void Awake()
   {
     _Renderer = GetComponent<SpriteRenderer>();
+  }
+
+  private void Update()
+  {
+    if (_PressedTime > 0)
+    {
+      _Renderer.color = _PressedColor;
+    }
+    else
+    {
+      _Renderer.color = _UnpressedColor;
+    }
   }
 }
