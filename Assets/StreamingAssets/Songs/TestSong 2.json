@@ -1,0 +1,97 @@
+﻿{
+  "BPM": 120,
+  "Notes": [
+    {
+      "Beat": 3,
+      "Key": "Up"
+    },
+    {
+      "Beat": 3.5,
+      "Key": "Left"
+    },
+    {
+      "Beat": 4,
+      "Key": "Down"
+    },
+    {
+      "Beat": 4.5,
+      "Key": "Left"
+    },
+    {
+      "Beat": 5,
+      "Key": "Down"
+    },
+    {
+      "Beat": 5.5,
+      "Key": "Left"
+    },
+    {
+      "Beat": 6,
+      "Key": "Up"
+    },
+    {
+      "Beat": 6.5,
+      "Key": "Right"
+    },
+    {
+      "Beat": 7,
+      "Key": "Up"
+    },
+    {
+      "Beat": 7.5,
+      "Key": "Right"
+    },
+    {
+      "Beat": 8,
+      "Key": "Up"
+    },
+    {
+      "Beat": 9,
+      "Key": "Left"
+    },
+    {
+      "Beat": 9.5,
+      "Key": "Right"
+    },
+    {
+      "Beat": 10,
+      "Key": "Left"
+    },
+    {
+      "Beat": 10.5,
+      "Key": "Right"
+    },
+    {
+      "Beat": 11,
+      "Key": "Left"
+    },
+    {
+      "Beat": 11.2,
+      "Key": "Left"
+    },
+    {
+      "Beat": 11.4,
+      "Key": "Up"
+    },
+    {
+      "Beat": 11.6,
+      "Key": "Up"
+    },
+    {
+      "Beat": 11.8,
+      "Key": "Right"
+    },
+    {
+      "Beat": 12,
+      "Key": "Right"
+    },
+    {
+      "Beat": 12.2,
+      "Key": "Down"
+    },
+    {
+      "Beat": 12.4,
+      "Key": "Down"
+    }
+  ]
+}

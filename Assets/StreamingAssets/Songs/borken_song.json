@@ -1,0 +1,145 @@
+﻿{
+  "BPM": 280,
+  "Notes": [
+    {
+      "Beat": 3,
+      "Key": "Left"
+    },
+	 {
+      "Beat": 3,
+      "Key": "Down"
+    },
+	 {
+      "Beat": 3,
+      "Key": "Right"
+    },
+	 {
+      "Beat": 3,
+      "Key": "Up"
+    },
+	 {
+      "Beat": 3.5,
+      "Key": "Left"
+    },
+	 {
+      "Beat": 3.5,
+      "Key": "Down"
+    },
+	 {
+      "Beat": 3.5,
+      "Key": "Right"
+    },
+	 {
+      "Beat": 3.5,
+      "Key": "Up"
+    },
+    {
+      "Beat": 4,
+      "Key": "Up"
+    },
+    {
+      "Beat": 4.5,
+      "Key": "Right"
+    },
+    {
+      "Beat": 5,
+      "Key": "Left"
+    },
+    {
+      "Beat": 5.5,
+      "Key": "Left"
+    },
+    {
+      "Beat": 6,
+      "Key": "Down"
+    },
+    {
+      "Beat": 6.5,
+      "Key": "Up"
+    },
+    {
+      "Beat": 7,
+      "Key": "Right"
+    },
+    {
+      "Beat": 7.5,
+      "Key": "Left"
+    },
+    {
+      "Beat": 8,
+      "Key": "Down"
+    },
+    {
+      "Beat": 8.5,
+      "Key": "Up"
+    },
+    {
+      "Beat": 9,
+      "Key": "Right"
+    },
+    {
+      "Beat": 9.5,
+      "Key": "Left"
+    },
+    {
+      "Beat": 10,
+      "Key": "Up"
+    },
+    {
+      "Beat": 10.5,
+      "Key": "Down"
+    },
+    {
+      "Beat": 11,
+      "Key": "Right"
+    },
+    {
+      "Beat": 11.5,
+      "Key": "Up"
+    },
+    {
+      "Beat": 11.6,
+      "Key": "Up"
+    },
+    {
+      "Beat": 11.8,
+      "Key": "Up"
+    },
+    {
+      "Beat": 12,
+      "Key": "Down"
+    },
+    {
+      "Beat": 12.2,
+      "Key": "Down"
+    },
+    {
+      "Beat": 12.4,
+      "Key": "Down"
+    },
+    {
+      "Beat": 13,
+      "Key": "Right"
+    },
+    {
+      "Beat": 13.2,
+      "Key": "Right"
+    },
+    {
+      "Beat": 13.4,
+      "Key": "Right"
+    },
+    {
+      "Beat": 14,
+      "Key": "Left"
+    },
+    {
+      "Beat": 14.2,
+      "Key": "Left"
+    },
+    {
+      "Beat": 14.4,
+      "Key": "Left"
+    }
+  ]
+}
