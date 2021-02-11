@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 140dd807c5a5d6f45a9534a25948a71c
+guid: 38de2a85720cddd4d8babf4a2f454574
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5503360470164250812
-    second: ref_note_white_0
+      213: 7739557493930090694
+    second: ref_note_white_glow_0
   - first:
-      213: -4525271763857599038
-    second: ref_note_white_1
+      213: 6867481406993606258
+    second: ref_note_white_glow_1
   - first:
-      213: 8172890490417589949
-    second: ref_note_white_2
+      213: 7522163485812223186
+    second: ref_note_white_glow_2
   - first:
-      213: -3080807541746275822
-    second: ref_note_white_3
+      213: 7934061615910593824
+    second: ref_note_white_glow_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -58,7 +58,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 90
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -137,13 +137,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ref_note_white_0
+      name: ref_note_white_glow_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 120
-        width: 100
-        height: 100
+        y: 136
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -151,20 +151,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44fdee87fc220a3b0800000000000000
-      internalID: -5503360470164250812
+      spriteID: 6c06a68e88e686b60800000000000000
+      internalID: 7739557493930090694
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ref_note_white_1
+      name: ref_note_white_glow_1
       rect:
         serializedVersion: 2
-        x: 120
-        y: 120
-        width: 100
-        height: 100
+        x: 136
+        y: 136
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,20 +172,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c599238e410331c0800000000000000
-      internalID: -4525271763857599038
+      spriteID: 276247544f13e4f50800000000000000
+      internalID: 6867481406993606258
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ref_note_white_2
+      name: ref_note_white_glow_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 100
-        height: 100
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,20 +193,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dbe22856990fb6170800000000000000
-      internalID: 8172890490417589949
+      spriteID: 2dc604216d7146860800000000000000
+      internalID: 7522163485812223186
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ref_note_white_3
+      name: ref_note_white_glow_3
       rect:
         serializedVersion: 2
-        x: 120
+        x: 136
         y: 0
-        width: 100
-        height: 100
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,8 +214,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21a6ed41dd5ce35d0800000000000000
-      internalID: -3080807541746275822
+      spriteID: 025a962d0037b1e60800000000000000
+      internalID: 7934061615910593824
       vertices: []
       indices: 
       edges: []

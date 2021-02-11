@@ -18,15 +18,33 @@ public class MainMenu : MonoBehaviour
   {
     fileNames = Directory.GetFiles(Application.streamingAssetsPath + "/Songs", "*.json");
 
-    for(int i = 0; i < fileNames.Length; i++)
+    int rows = fileNames.Length / columns;
+    if(rows * columns < fileNames.Length)
     {
+      rows++;
+    }
+
+
+    int targetRow = 0;
+    int targetColumn = -1;
+    Vector2 startingPosition = new Vector2(-(float)columns / 2f * buttonSize.x, (float)rows / 2f * buttonSize.y);
+    for (int i = 0; i < fileNames.Length; i++)
+    {
+
+      targetColumn++;
+      if(targetColumn >= columns)
+      {
+        targetRow++;
+        targetColumn-= columns;
+      }
+
       fileNames[i] = Path.GetFileNameWithoutExtension(fileNames[i]);
 
       //Positioning doesnt work but it'll do for now
       GameObject newButton = Instantiate(buttonTemplate, buttonParent);
-      Vector3 buttonPosition = new Vector3(0, 500 - (i * 200), 0);
-      newButton.GetComponent<RectTransform>().localPosition = buttonPosition;
       newButton.name = fileNames[i]; // This is painful to do
+      Vector3 buttonPosition = new Vector3(targetColumn * buttonSize.x, -targetRow * buttonSize.y, 0) + (Vector3)startingPosition;
+      newButton.GetComponent<RectTransform>().localPosition = buttonPosition;
       newButton.GetComponentInChildren<Text>().text = fileNames[i];
       Button button = newButton.GetComponent<Button>();
       button.onClick.AddListener(() => LoadSong(newButton.name));

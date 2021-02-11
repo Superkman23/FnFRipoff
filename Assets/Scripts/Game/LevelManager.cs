@@ -155,6 +155,7 @@ public class LevelManager : MonoBehaviour
         {
           hitKey.GetHit();
           _PlayerArrows[i]._HitThisPress = true;
+          _PlayerArrows[i].StartGlow();
           _Health += _HealthPerHit;
         }
       }
