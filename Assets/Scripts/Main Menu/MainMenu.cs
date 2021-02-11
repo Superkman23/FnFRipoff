@@ -11,15 +11,23 @@ public class MainMenu : MonoBehaviour
   public string[] fileNames;
 
   public Transform buttonParent;
+  public Transform _OptionsMenu;
+  public Transform _SongMenu;
+
   public Vector2 buttonSize;
   public GameObject buttonTemplate;
 
   private void Start()
   {
+    CreateMenuButtons();
+  }
+
+  void CreateMenuButtons()
+  {
     fileNames = Directory.GetFiles(Application.streamingAssetsPath + "/Songs", "*.json");
 
     int rows = fileNames.Length / columns;
-    if(rows * columns < fileNames.Length)
+    if (rows * columns < fileNames.Length)
     {
       rows++;
     }
@@ -32,15 +40,15 @@ public class MainMenu : MonoBehaviour
     {
 
       targetColumn++;
-      if(targetColumn >= columns)
+      if (targetColumn >= columns)
       {
         targetRow++;
-        targetColumn-= columns;
+        targetColumn -= columns;
       }
 
       fileNames[i] = Path.GetFileNameWithoutExtension(fileNames[i]);
 
-      //Positioning doesnt work but it'll do for now
+      //Positioning actually works but this still looks like shit
       GameObject newButton = Instantiate(buttonTemplate, buttonParent);
       newButton.name = fileNames[i]; // This is painful to do
       Vector3 buttonPosition = new Vector3(targetColumn * buttonSize.x, -targetRow * buttonSize.y, 0) + (Vector3)startingPosition;
@@ -51,14 +59,22 @@ public class MainMenu : MonoBehaviour
     }
   }
 
+
+
+  public void OpenOptionsMenu()
+  {
+    _OptionsMenu.gameObject.SetActive(true);
+    _SongMenu.gameObject.SetActive(false);
+  }
+  public void OpenSongMenu()
+  {
+    _OptionsMenu.gameObject.SetActive(false);
+    _SongMenu.gameObject.SetActive(true);
+  }
+
   public void LoadSong(string songName)
   {
     Global._PlayingSong = JsonToSong.GetSong(songName);
     SceneManager.LoadScene("Game");
   }
-
-
-
-
-
 }

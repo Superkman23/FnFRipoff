@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-  public static LevelManager _Manager;
+  public static LevelManager _Manager; // Used so I dont need to give every single object that edits health n stuff a reference to the active manager because that is kind of annoying to do
 
   [Header("Menu Stuff")]
   public bool _Paused;
@@ -79,25 +79,7 @@ public class LevelManager : MonoBehaviour
       return;
     }
 
-    if (_LastBeat == -1)
-    {
-      for (int i = 0; i < Global._PlayingSong._Notes.Count; i++)
-      {
-        Note note = Global._PlayingSong._Notes[i];
-
-        if(note._Time > _LastBeat)
-          _LastBeat = note._Time;
-      }
-    }
-
-    if(_Time > _LastBeat + _EndDelay)
-    {
-      //TOOD add some fade effect
-      SceneManager.LoadScene("Main Menu");
-    }
-
-
-
+    ManageEnd();
     ManageArrows();
     ManageSong();
     ManageUI();
@@ -107,6 +89,31 @@ public class LevelManager : MonoBehaviour
   private void OnDestroy()
   {
     _Manager = null; //Allow a new manager to be set when another level is loaded
+  }
+
+
+  void ManageEnd()
+  {
+    if (_LastBeat == -1)
+    {
+      for (int i = 0; i < Global._PlayingSong._Notes.Count; i++)
+      {
+        Note note = Global._PlayingSong._Notes[i];
+
+        if (note._Time > _LastBeat)
+          _LastBeat = note._Time;
+      }
+    }
+
+    if (_Health <= 0)
+    {
+      LoseSong();
+    }
+
+    if (_Time > _LastBeat + _EndDelay)
+    {
+      WinSong();
+    }
   }
 
   void ManageArrows()
@@ -253,6 +260,18 @@ public class LevelManager : MonoBehaviour
     float beats = seconds * Global._PlayingSong._BPM;
     beats /= 60;
     return beats;
+  }
+
+  void LoseSong()
+  {
+    //TODO: add some lose effects
+    SceneManager.LoadScene("Main Menu");
+  }
+
+  void WinSong()
+  {
+    //TODO: add win effects
+    SceneManager.LoadScene("Main Menu");
   }
 
   //Reduce the amount of variables here when optimization is needed
