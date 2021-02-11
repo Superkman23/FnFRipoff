@@ -1616,9 +1616,9 @@ MonoBehaviour:
   _StartingDelay: 4
   _EndDelay: 4
   _LastBeat: -1
-  _NoteMoveSpeed: 6.58
-  _HitColliderSize: 0.73
-  _MaxArrowPressTime: 0.07
+  _NoteMoveSpeed: 7
+  _HitColliderSize: 0.5
+  _MaxArrowPressTime: 0.1
   _HealthPerHit: 1
   _HealthPerMiss: -4
   _Health: 50
