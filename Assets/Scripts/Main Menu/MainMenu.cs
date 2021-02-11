@@ -7,15 +7,15 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-  public int columns;
-  public string[] fileNames;
+  public int _Columns;
+  public string[] _FileNames;
 
-  public Transform buttonParent;
+  public Transform _ButtonParent;
   public Transform _OptionsMenu;
   public Transform _SongMenu;
 
-  public Vector2 buttonSize;
-  public GameObject buttonTemplate;
+  public Vector2 _ButtonSize;
+  public GameObject _ButtonTemplate;
 
   private void Start()
   {
@@ -24,10 +24,10 @@ public class MainMenu : MonoBehaviour
 
   void CreateMenuButtons()
   {
-    fileNames = Directory.GetFiles(Application.streamingAssetsPath + "/Songs", "*.json");
+    _FileNames = Directory.GetFiles(Application.streamingAssetsPath + "/Songs", "*.json");
 
-    int rows = fileNames.Length / columns;
-    if (rows * columns < fileNames.Length)
+    int rows = _FileNames.Length / _Columns;
+    if (rows * _Columns < _FileNames.Length)
     {
       rows++;
     }
@@ -35,25 +35,25 @@ public class MainMenu : MonoBehaviour
 
     int targetRow = 0;
     int targetColumn = -1;
-    Vector2 startingPosition = new Vector2(-(float)columns / 2f * buttonSize.x, (float)rows / 2f * buttonSize.y);
-    for (int i = 0; i < fileNames.Length; i++)
+    Vector2 startingPosition = new Vector2(-(float)_Columns / 2f * _ButtonSize.x, (float)rows / 2f * _ButtonSize.y);
+    for (int i = 0; i < _FileNames.Length; i++)
     {
 
       targetColumn++;
-      if (targetColumn >= columns)
+      if (targetColumn >= _Columns)
       {
         targetRow++;
-        targetColumn -= columns;
+        targetColumn -= _Columns;
       }
 
-      fileNames[i] = Path.GetFileNameWithoutExtension(fileNames[i]);
+      _FileNames[i] = Path.GetFileNameWithoutExtension(_FileNames[i]);
 
       //Positioning actually works but this still looks like shit
-      GameObject newButton = Instantiate(buttonTemplate, buttonParent);
-      newButton.name = fileNames[i]; // This is painful to do
-      Vector3 buttonPosition = new Vector3(targetColumn * buttonSize.x, -targetRow * buttonSize.y, 0) + (Vector3)startingPosition;
+      GameObject newButton = Instantiate(_ButtonTemplate, _ButtonParent);
+      newButton.name = _FileNames[i]; // This is painful to do
+      Vector3 buttonPosition = new Vector3(targetColumn * _ButtonSize.x, -targetRow * _ButtonSize.y, 0) + (Vector3)startingPosition;
       newButton.GetComponent<RectTransform>().localPosition = buttonPosition;
-      newButton.GetComponentInChildren<Text>().text = fileNames[i];
+      newButton.GetComponentInChildren<Text>().text = _FileNames[i];
       Button button = newButton.GetComponent<Button>();
       button.onClick.AddListener(() => LoadSong(newButton.name));
     }
