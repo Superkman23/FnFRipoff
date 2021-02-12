@@ -184,7 +184,7 @@ public class LevelManager : MonoBehaviour
           _NotePrefabs[(int)note._Key].transform.rotation).GetComponent<Key>();
         Global._PlayingSong._Notes[i]._Sent = true;
 
-        key._MoveSpeed = Global._NoteMoveSpeed;
+        key._MoveSpeed = Global._PlayingSong._NoteSpeed * Global._NoteSpeedMultiplier;
         key._Time = note._Time;
         key._Collider.size = Global._HitColliderSize * Vector2.one;
       }
@@ -279,7 +279,7 @@ public class LevelManager : MonoBehaviour
   {
     float hitTime = BeatsToSeconds(hitBeat);
     float distance = Mathf.Abs(_NoteSpawnY - _PlayerArrowsY);
-    float timeToCross = distance / Global._NoteMoveSpeed;
+    float timeToCross = distance / Global._PlayingSong._NoteSpeed * Global._NoteSpeedMultiplier;
 
     return SecondsToBeats(hitTime - timeToCross);
   }
@@ -287,7 +287,7 @@ public class LevelManager : MonoBehaviour
   {
     float time = BeatsToSeconds(beats);
     float distance = Mathf.Abs(_NoteSpawnY - _PlayerArrowsY);
-    float timeToCross = distance / Global._NoteMoveSpeed;
+    float timeToCross = distance / Global._PlayingSong._NoteSpeed * Global._NoteSpeedMultiplier;
     float percentExtra = time / timeToCross;
 
     return distance * percentExtra;

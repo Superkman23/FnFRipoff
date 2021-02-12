@@ -27,7 +27,7 @@ public class JsonToSong : MonoBehaviour
       Note.Direction direction = GetDirection(noteJson.Key);
       notes.Add(new Note(direction, noteJson.Beat));
     }
-    return new Song(notes, songJson.BPM);
+    return new Song(notes, songJson.BPM, songJson.NoteSpeed);
   }
 
   public static Note.Direction GetDirection(string input)
@@ -61,6 +61,7 @@ public class SongJson
 {
   //public NoteJson[] Notes;
   public int BPM;
+  public float NoteSpeed;
   public NoteJson[] Notes;
 }
 

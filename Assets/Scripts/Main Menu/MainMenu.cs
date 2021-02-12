@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour
   {
     CreateMenuButtons();
     OpenSongMenu();
-    _NoteSpeedSlider.value = Global._NoteMoveSpeed;
+    _NoteSpeedSlider.value = Global._NoteSpeedMultiplier;
     _ColliderSizeSlider.value = Global._HitColliderSize;
   }
 
@@ -88,7 +88,7 @@ public class MainMenu : MonoBehaviour
 
   public void SetNoteSpeed()
   {
-    Global._NoteMoveSpeed = _NoteSpeedSlider.value;
+    Global._NoteSpeedMultiplier = _NoteSpeedSlider.value;
   }
   public void SetColliderSize()
   {

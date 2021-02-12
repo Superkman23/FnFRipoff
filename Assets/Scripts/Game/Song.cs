@@ -7,11 +7,13 @@ public class Song
 {
   public List<Note> _Notes;
   public float _BPM;
+  public float _NoteSpeed;
 
-  public Song(List<Note> notes, float bpm)
+  public Song(List<Note> notes, float bpm, float noteSpeed)
   {
     _Notes = notes;
     _BPM = bpm;
+    _NoteSpeed = noteSpeed;
   }
 }
 

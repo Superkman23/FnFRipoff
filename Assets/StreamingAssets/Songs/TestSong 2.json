@@ -1,5 +1,6 @@
 ﻿{
   "BPM": 120,
+  "NoteSpeed": 6,
   "Notes": [
     {
       "Beat": 3,

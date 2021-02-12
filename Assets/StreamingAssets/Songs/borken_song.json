@@ -1,35 +1,36 @@
 ﻿{
   "BPM": 280,
+  "NoteSpeed": 6,
   "Notes": [
     {
       "Beat": 3,
       "Key": "Left"
     },
-	 {
+    {
       "Beat": 3,
       "Key": "Down"
     },
-	 {
+    {
       "Beat": 3,
       "Key": "Right"
     },
-	 {
+    {
       "Beat": 3,
       "Key": "Up"
     },
-	 {
+    {
       "Beat": 3.5,
       "Key": "Left"
     },
-	 {
+    {
       "Beat": 3.5,
       "Key": "Down"
     },
-	 {
+    {
       "Beat": 3.5,
       "Key": "Right"
     },
-	 {
+    {
       "Beat": 3.5,
       "Key": "Up"
     },
