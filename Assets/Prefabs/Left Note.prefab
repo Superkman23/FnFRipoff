@@ -100,7 +100,7 @@ MonoBehaviour:
   _MoveSpeed: 4
   _Time: 0
   _Collider: {fileID: 0}
-  _Trail: {fileID: 6900751707110951691}
+  _Trail: {fileID: 7843073002880520385}
   _Duration: 0
   _IsHeld: 0
   _HasBeenHit: 0
@@ -140,6 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6900751707110951691}
   - component: {fileID: 6895558855998294035}
+  - component: {fileID: 7843073002880520385}
   m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
@@ -212,3 +213,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7843073002880520385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4015028793768441804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1de39ee4bc8b9bb41804d55f130a697d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _MoveSpeed: 0
