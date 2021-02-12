@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
   float _TimeUntilNextZoom;
 
   [Header("Notes")]
-  public float _NoteSpawnY = -4;
+  public float _NoteSpawnY = -6;
   public GameObject[] _NotePrefabs;
 
   [Header("Arrows")]
@@ -34,13 +34,6 @@ public class LevelManager : MonoBehaviour
   public int _StartingDelay; // how many beats before the song starts
   public int _EndDelay;  // how many beats before the song ends
   [HideInInspector] public float _LastBeat = -1; // when do notes stop coming
-
-  //[Header("Difficulty Settings")]
-  //public float _NoteMoveSpeed = 4;
-  //public float _HitColliderSize = 1;
-  //public float _MaxArrowPressTime = 0.1f; //How long a key can be pressed (in seconds) until it will no longer destroy new notes
-  //public float _HealthPerHit = 2;
-  //public float _HealthPerMiss = -6;
 
   //Misc
   public float _Health = 50;
@@ -143,27 +136,50 @@ public class LevelManager : MonoBehaviour
 
       if (_PlayerArrows[i]._PressedTime <= Global._MaxArrowPressTime && _PlayerArrows[i]._PressedTime > 0 && !_PlayerArrows[i]._HitThisPress)
       {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(_PlayerArrows[i].transform.position, Vector2.one * Global._HitColliderSize, 0);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(_PlayerArrows[i].transform.position, Vector2.one, 0);
         Key hitKey = null;
+
+        float minDistance = 10f;
 
         foreach (Collider2D collider in colliders)
         {
           Key key = collider.GetComponent<Key>();
-
           if (key)
           {
-            if (!hitKey || hitKey._Time > key._Time)
+            float distance = Mathf.Abs(_PlayerArrows[i].transform.position.y - collider.transform.position.y);
+            if (!hitKey || distance < minDistance)
             {
               hitKey = key;
+              minDistance = distance;
             }
           }
         }
         if (hitKey)
         {
+          if (minDistance < 0.05f)
+          {
+            Debug.Log("PERFECT!");
+            _Health += Global._HealthPerHit * 1.2f;
+          }
+          else if (minDistance < 0.2f)
+          {
+            Debug.Log("Great!");
+            _Health += Global._HealthPerHit;
+          }
+          else if(minDistance < 0.9f)
+          {
+            Debug.Log("Good.");
+            _Health += Global._HealthPerHit * 0.8f;
+          }
+          else
+          {
+            Debug.Log("Bad");
+            _Health += Global._HealthPerHit * 0.5f;
+          }
+
           hitKey.GetHit();
           _PlayerArrows[i]._HitThisPress = true;
           _PlayerArrows[i].StartGlow();
-          _Health += Global._HealthPerHit;
         }
       }
     }
@@ -186,7 +202,7 @@ public class LevelManager : MonoBehaviour
 
         key._MoveSpeed = Global._PlayingSong._NoteSpeed * Global._NoteSpeedMultiplier;
         key._Time = note._Time;
-        key._Collider.size = Global._HitColliderSize * Vector2.one;
+        key._Collider.size = Vector2.one;
       }
     }
 
