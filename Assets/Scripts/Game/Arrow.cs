@@ -7,6 +7,8 @@ public class Arrow : MonoBehaviour
   [HideInInspector] public SpriteRenderer _Renderer;
   public float _PressedTime = 0;
   public bool _HitThisPress = false;
+  public Key _HeldNote;
+
 
   public SpriteRenderer _GlowSpriteRenderer;
   public float _FadeTime;

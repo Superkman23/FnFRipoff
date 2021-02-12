@@ -1,0 +1,36 @@
+﻿{
+  "BPM": 120,
+  "NoteSpeed": 6,
+  "Notes": [
+    {
+      "Beat": 3,
+      "Key": "Down",
+      "Duration": 5
+    },
+    {
+      "Beat": 9,
+      "Key": "Up",
+      "Duration": 5
+    },
+    {
+      "Beat": 14,
+      "Key": "Left",
+      "Duration": 5
+    },
+    {
+      "Beat": 19,
+      "Key": "Right",
+      "Duration": 5
+    },
+    {
+      "Beat": 24,
+      "Key": "Up",
+      "Duration": 5
+    },
+    {
+      "Beat": 29,
+      "Key": "Up",
+      "Duration": 5
+    }
+  ]
+}

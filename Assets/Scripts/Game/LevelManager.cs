@@ -93,8 +93,8 @@ public class LevelManager : MonoBehaviour
       {
         Note note = Global._PlayingSong._Notes[i];
 
-        if (note._Time > _LastBeat)
-          _LastBeat = note._Time;
+        if (note._Time + note._Duration > _LastBeat)
+          _LastBeat = note._Time + note._Duration;
       }
     }
 
@@ -116,6 +116,11 @@ public class LevelManager : MonoBehaviour
     {
       if (input[i])
       {
+        if(_PlayerArrows[i]._HeldNote != null)
+        {
+          _PlayerArrows[i].StartGlow();
+          _Health += SecondsToBeats(Time.deltaTime) * Global._HealthPerHit;
+        }
         _PlayerArrows[i]._PressedTime += Time.deltaTime;
       }
       else
@@ -126,6 +131,12 @@ public class LevelManager : MonoBehaviour
         }
         _PlayerArrows[i]._PressedTime = 0;
         _PlayerArrows[i]._HitThisPress = false;
+
+        if (_PlayerArrows[i]._HeldNote != null)
+        {
+          _PlayerArrows[i]._HeldNote._IsHeld = false;
+          _PlayerArrows[i]._HeldNote = null;
+        }
       }
 
       if (_PlayerArrows[i]._PressedTime > Global._MaxArrowPressTime && !_PlayerArrows[i]._HitThisPress)
@@ -146,6 +157,10 @@ public class LevelManager : MonoBehaviour
           Key key = collider.GetComponent<Key>();
           if (key)
           {
+            if (key._HasBeenHit)
+              continue;
+
+
             float distance = Mathf.Abs(_PlayerArrows[i].transform.position.y - collider.transform.position.y);
             if (!hitKey || distance < minDistance)
             {
@@ -161,7 +176,7 @@ public class LevelManager : MonoBehaviour
             Debug.Log("PERFECT!");
             _Health += Global._HealthPerHit * 1.2f;
           }
-          else if (minDistance < 0.2f)
+          else if (minDistance < 0.4f)
           {
             Debug.Log("Great!");
             _Health += Global._HealthPerHit;
@@ -173,13 +188,24 @@ public class LevelManager : MonoBehaviour
           }
           else
           {
-            Debug.Log("Bad");
+            Debug.Log("Bad.");
             _Health += Global._HealthPerHit * 0.5f;
           }
 
-          hitKey.GetHit();
-          _PlayerArrows[i]._HitThisPress = true;
+          if (hitKey._Duration != 0)
+          {
+            hitKey._IsHeld = true;
+            _PlayerArrows[i]._HeldNote = hitKey;
+            hitKey.transform.position = _PlayerArrows[i].transform.position;
+          }
+          else
+          {
+            hitKey.GetHit();
+          }
+          hitKey._HasBeenHit = true;
+
           _PlayerArrows[i].StartGlow();
+          _PlayerArrows[i]._HitThisPress = true;
         }
       }
     }
@@ -202,7 +228,9 @@ public class LevelManager : MonoBehaviour
 
         key._MoveSpeed = Global._PlayingSong._NoteSpeed * Global._NoteSpeedMultiplier;
         key._Time = note._Time;
+        key._Duration = note._Duration;
         key._Collider.size = Vector2.one;
+        key.UpdateVariables();
       }
     }
 
@@ -255,7 +283,7 @@ public class LevelManager : MonoBehaviour
       _Health += damage;
     }
   }
-  float BeatsToSeconds(float beats)
+  public float BeatsToSeconds(float beats)
   {
     if (Global._PlayingSong == null)
     {
@@ -266,7 +294,7 @@ public class LevelManager : MonoBehaviour
     seconds /= Global._PlayingSong._BPM;
     return seconds;
   }
-  float SecondsToBeats(float seconds)
+  public float SecondsToBeats(float seconds)
   {
     if (Global._PlayingSong == null)
     {

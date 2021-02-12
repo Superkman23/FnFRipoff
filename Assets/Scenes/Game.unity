@@ -1599,7 +1599,7 @@ MonoBehaviour:
   _DefaultZoom: 5
   _ZoomPerBeat: -0.3
   _ZoomReturnSpeed: 3
-  _NoteSpawnY: -4
+  _NoteSpawnY: -6
   _NotePrefabs:
   - {fileID: 3501079431577828964, guid: 2cb0c531199165247b522c7e79fd3240, type: 3}
   - {fileID: 2259167530887163185, guid: 561a6e5a21940f549b2641f2f8680bba, type: 3}
@@ -1616,11 +1616,6 @@ MonoBehaviour:
   _StartingDelay: 4
   _EndDelay: 4
   _LastBeat: -1
-  _NoteMoveSpeed: 7
-  _HitColliderSize: 0.5
-  _MaxArrowPressTime: 0.1
-  _HealthPerHit: 1
-  _HealthPerMiss: -4
   _Health: 50
   _BeatText: {fileID: 771939877}
   _HealthBar: {fileID: 1823434446}
