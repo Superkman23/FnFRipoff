@@ -102,6 +102,8 @@ MonoBehaviour:
   _Collider: {fileID: 0}
   _Trail: {fileID: 921675126831095996}
   _Duration: 0
+  _IsHeld: 0
+  _HasBeenHit: 0
 --- !u!61 &4715770180755424576
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -200,7 +202,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6734f2753b1979a41b427b45e1d4c8ac, type: 3}
-  m_Color: {r: 1, g: 0.6156863, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.6156863, b: 0, a: 0.6}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -27,7 +27,7 @@ public class Key : MonoBehaviour
     }
     if(_Duration < 0)
     {
-      GetHit();
+      GetHit(false);
     }
 
     if(!LevelManager._Manager._Paused && !_IsHeld)
@@ -44,8 +44,13 @@ public class Key : MonoBehaviour
   }
 
 
-  public void GetHit()
+  public void GetHit(bool missed)
   {
+    if (missed)
+    {
+      if(!_HasBeenHit)
+        LevelManager._Manager.MissNote();
+    }
     Destroy(gameObject);
   }
 }

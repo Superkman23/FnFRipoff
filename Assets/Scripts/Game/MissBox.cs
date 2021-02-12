@@ -14,8 +14,7 @@ public class MissBox : MonoBehaviour
       Key key = collider.GetComponent<Key>();
       if (key)
       {
-        key.GetHit();
-        LevelManager._Manager.MissNote();
+        key.GetHit(true);
       }
     }
   }

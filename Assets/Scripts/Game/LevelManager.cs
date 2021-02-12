@@ -200,7 +200,7 @@ public class LevelManager : MonoBehaviour
           }
           else
           {
-            hitKey.GetHit();
+            hitKey.GetHit(false);
           }
           hitKey._HasBeenHit = true;
 
