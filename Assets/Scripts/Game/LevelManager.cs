@@ -35,12 +35,12 @@ public class LevelManager : MonoBehaviour
   public int _EndDelay;  // how many beats before the song ends
   [HideInInspector] public float _LastBeat = -1; // when do notes stop coming
 
-  [Header("Difficulty Settings")]
-  public float _NoteMoveSpeed = 4;
-  public float _HitColliderSize = 1;
-  public float _MaxArrowPressTime = 0.1f; //How long a key can be pressed (in seconds) until it will no longer destroy new notes
-  public float _HealthPerHit = 2;
-  public float _HealthPerMiss = -6;
+  //[Header("Difficulty Settings")]
+  //public float _NoteMoveSpeed = 4;
+  //public float _HitColliderSize = 1;
+  //public float _MaxArrowPressTime = 0.1f; //How long a key can be pressed (in seconds) until it will no longer destroy new notes
+  //public float _HealthPerHit = 2;
+  //public float _HealthPerMiss = -6;
 
   //Misc
   public float _Health = 50;
@@ -129,21 +129,21 @@ public class LevelManager : MonoBehaviour
       {
         if (!_PlayerArrows[i]._HitThisPress && _PlayerArrows[i]._PressedTime > 0)
         {
-          MissNote(_HealthPerMiss / 2);
+          MissNote(Global._HealthPerMiss / 2);
         }
         _PlayerArrows[i]._PressedTime = 0;
         _PlayerArrows[i]._HitThisPress = false;
       }
 
-      if (_PlayerArrows[i]._PressedTime > _MaxArrowPressTime && !_PlayerArrows[i]._HitThisPress)
+      if (_PlayerArrows[i]._PressedTime > Global._MaxArrowPressTime && !_PlayerArrows[i]._HitThisPress)
       {
-        MissNote(_HealthPerMiss / 2);
+        MissNote(Global._HealthPerMiss / 2);
         _PlayerArrows[i]._HitThisPress = true;
       }
 
-      if (_PlayerArrows[i]._PressedTime <= _MaxArrowPressTime && _PlayerArrows[i]._PressedTime > 0 && !_PlayerArrows[i]._HitThisPress)
+      if (_PlayerArrows[i]._PressedTime <= Global._MaxArrowPressTime && _PlayerArrows[i]._PressedTime > 0 && !_PlayerArrows[i]._HitThisPress)
       {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(_PlayerArrows[i].transform.position, Vector2.one * _HitColliderSize, 0);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(_PlayerArrows[i].transform.position, Vector2.one * Global._HitColliderSize, 0);
         Key hitKey = null;
 
         foreach (Collider2D collider in colliders)
@@ -163,7 +163,7 @@ public class LevelManager : MonoBehaviour
           hitKey.GetHit();
           _PlayerArrows[i]._HitThisPress = true;
           _PlayerArrows[i].StartGlow();
-          _Health += _HealthPerHit;
+          _Health += Global._HealthPerHit;
         }
       }
     }
@@ -184,9 +184,9 @@ public class LevelManager : MonoBehaviour
           _NotePrefabs[(int)note._Key].transform.rotation).GetComponent<Key>();
         Global._PlayingSong._Notes[i]._Sent = true;
 
-        key._MoveSpeed = _NoteMoveSpeed;
+        key._MoveSpeed = Global._NoteMoveSpeed;
         key._Time = note._Time;
-        key._Collider.size = _HitColliderSize * Vector2.one;
+        key._Collider.size = Global._HitColliderSize * Vector2.one;
       }
     }
 
@@ -232,7 +232,7 @@ public class LevelManager : MonoBehaviour
   {
     if (damage < 0)
     {
-      _Health += _HealthPerMiss;
+      _Health += Global._HealthPerMiss;
     }
     else
     {
@@ -279,7 +279,7 @@ public class LevelManager : MonoBehaviour
   {
     float hitTime = BeatsToSeconds(hitBeat);
     float distance = Mathf.Abs(_NoteSpawnY - _PlayerArrowsY);
-    float timeToCross = distance / _NoteMoveSpeed;
+    float timeToCross = distance / Global._NoteMoveSpeed;
 
     return SecondsToBeats(hitTime - timeToCross);
   }
@@ -287,7 +287,7 @@ public class LevelManager : MonoBehaviour
   {
     float time = BeatsToSeconds(beats);
     float distance = Mathf.Abs(_NoteSpawnY - _PlayerArrowsY);
-    float timeToCross = distance / _NoteMoveSpeed;
+    float timeToCross = distance / Global._NoteMoveSpeed;
     float percentExtra = time / timeToCross;
 
     return distance * percentExtra;

@@ -14,12 +14,21 @@ public class MainMenu : MonoBehaviour
   public Transform _OptionsMenu;
   public Transform _SongMenu;
 
+
+  [Header("Difficulty Sliders")]
+  public Slider _NoteSpeedSlider;
+  public Slider _ColliderSizeSlider;
+
+
   public Vector2 _ButtonSize;
   public GameObject _ButtonTemplate;
 
   private void Start()
   {
     CreateMenuButtons();
+    OpenSongMenu();
+    _NoteSpeedSlider.value = Global._NoteMoveSpeed;
+    _ColliderSizeSlider.value = Global._HitColliderSize;
   }
 
   void CreateMenuButtons()
@@ -71,10 +80,18 @@ public class MainMenu : MonoBehaviour
     _OptionsMenu.gameObject.SetActive(false);
     _SongMenu.gameObject.SetActive(true);
   }
-
   public void LoadSong(string songName)
   {
     Global._PlayingSong = JsonToSong.GetSong(songName);
     SceneManager.LoadScene("Game");
+  }
+
+  public void SetNoteSpeed()
+  {
+    Global._NoteMoveSpeed = _NoteSpeedSlider.value;
+  }
+  public void SetColliderSize()
+  {
+    Global._HitColliderSize = _ColliderSizeSlider.value;
   }
 }
