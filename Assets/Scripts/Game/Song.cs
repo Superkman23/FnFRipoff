@@ -30,11 +30,13 @@ public class Note
   public float _Time; // When the note should be hit
   public Direction _Key;
   public bool _Sent; //Ensure that a note isnt sent twice
+  public float _Duration; //For notes that you need to hold a key down for, in beats. 0 represents a basic note.
 
-  public Note(Direction key, float time, bool sent = false)
+  public Note(Direction key, float time, float duration = 0, bool sent = false)
   {
     _Key = key;
     _Time = time;
+    _Duration = duration;
     _Sent = sent;
   }
 }

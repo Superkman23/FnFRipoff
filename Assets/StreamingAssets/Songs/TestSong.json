@@ -4,7 +4,8 @@
   "Notes": [
     {
       "Beat": 3,
-      "Key": "Down"
+      "Key": "Down",
+      "Duration": 1
     },
     {
       "Beat": 3.5,

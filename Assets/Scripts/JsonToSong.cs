@@ -24,8 +24,9 @@ public class JsonToSong : MonoBehaviour
 
     foreach(NoteJson noteJson in songJson.Notes)
     {
+      Debug.Log(noteJson.Duration);
       Note.Direction direction = GetDirection(noteJson.Key);
-      notes.Add(new Note(direction, noteJson.Beat));
+      notes.Add(new Note(direction, noteJson.Beat, noteJson.Duration)); //add duration when long notes are properly implemented
     }
     return new Song(notes, songJson.BPM, songJson.NoteSpeed);
   }
@@ -68,6 +69,7 @@ public class SongJson
 [System.Serializable]
 public class NoteJson
 {
-  public float Beat; // When the note should be hit
-  public string Key;
+  public float Beat = 0; // When the note should be hit
+  public string Key = "Up";
+  public float Duration = 0;
 }
