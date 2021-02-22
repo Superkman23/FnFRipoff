@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 public static class Global
 {
   public static Song _PlayingSong;
@@ -9,4 +10,8 @@ public static class Global
   public static float _MaxArrowPressTime = 0.1f;
   public static float _HealthPerHit = 2;
   public static float _HealthPerMiss = -4;
+
+  //Fade Settings
+  public static float _FadeDuration = 1;
+
 }

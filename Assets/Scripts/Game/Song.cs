@@ -3,12 +3,14 @@
 public class Song
 {
   public List<Note> _Notes;
+  public List<Effect> _Effects;
   public float _BPM;
   public float _NoteSpeed;
 
-  public Song(List<Note> notes, float bpm, float noteSpeed)
+  public Song(List<Note> notes, List<Effect> effects, float bpm, float noteSpeed)
   {
     _Notes = notes;
+    _Effects = effects;
     _BPM = bpm;
     _NoteSpeed = noteSpeed;
   }
@@ -36,4 +38,23 @@ public class Note
     _Duration = duration;
     _Sent = sent;
   }
+}
+
+public class Effect
+{
+  public enum EffectType
+  {
+    Zoom
+  }
+  public float _Time;
+  public EffectType _Type;
+  public bool _Sent;
+
+  public Effect(EffectType type, float time, bool sent = false)
+  {
+    _Type = type;
+    _Time = time;
+    _Sent = sent;
+  }
+
 }

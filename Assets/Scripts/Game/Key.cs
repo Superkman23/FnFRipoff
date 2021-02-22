@@ -8,7 +8,6 @@ public class Key : MonoBehaviour
   public KeyTrail _Trail;
   public float _Duration;
   public bool _IsHeld;
-  public bool _HasBeenHit;
 
   private void Awake()
   {
@@ -36,14 +35,11 @@ public class Key : MonoBehaviour
   {
     if (_Trail != null)
     {
-      if (_Trail._Renderer)
+      if (!_Trail._Renderer)
       {
-        _Trail._Renderer.size = new Vector3(.3f, _MoveSpeed * _Duration * 60 / Global._PlayingSong._BPM, 1);
+        _Trail._Renderer = _Trail.GetComponent<SpriteRenderer>();
       }
-      else
-      {
-        _Trail.GetComponent<SpriteRenderer>().size = new Vector3(.3f, _MoveSpeed * _Duration * 60 / Global._PlayingSong._BPM, 1);
-      }
+      _Trail._Renderer.size = new Vector3(.3f, _MoveSpeed * _Duration * 60 / Global._PlayingSong._BPM, 1);
       _Trail.transform.localPosition = new Vector3(0, _Duration * _MoveSpeed * -30 / Global._PlayingSong._BPM, 0);
       _Trail._MoveSpeed = _MoveSpeed;
     }
@@ -54,10 +50,14 @@ public class Key : MonoBehaviour
   {
     if (missed)
     {
-      _Trail.transform.parent = null;
-      if (!_HasBeenHit)
-        LevelManager._Manager.MissNote();
+      ReleaseTrail();
+      LevelManager._Manager.MissNote();
     }
     Destroy(gameObject);
+  }
+
+  public void ReleaseTrail()
+  {
+    _Trail.transform.parent = null;
   }
 }

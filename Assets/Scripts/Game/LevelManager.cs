@@ -8,7 +8,8 @@ public class LevelManager : MonoBehaviour
   {
     GameplayState,
     PauseState,
-    LoseState
+    LoseState,
+    WinState
   };
 
   public static LevelManager _Manager; // Used so I dont need to give every single object that edits health n stuff a reference to the active manager because that is kind of annoying to do
@@ -38,20 +39,28 @@ public class LevelManager : MonoBehaviour
 
   [Header("Song")] //All in beats
   float _Time; //Current time
-  public int _StartingDelay; // how many beats before the song starts
+  public int _StartingDelay; // time before the song starts (in seconds)
   public int _EndDelay;  // how many beats before the song ends
   [HideInInspector] public float _LastBeat = -1; // when do notes stop coming
 
-  //Misc
+  [Header("Misc")]
   public float _Health = 50;
-
-  [Header("Debug")]
   public Text _BeatText;
   public Image _HealthBar;
 
+  [Header("Fading")]
+  public CanvasGroup _FadeGroup;
+  public float _TargetFadeAlpha;
+
   private void Awake()
   {
+    if (Global._PlayingSong == null) //Song didnt properly load, load a default one instead.
+    {
+      Global._PlayingSong = JsonToSong.GetSong("TestSong");
+    }
 
+    _FadeGroup.alpha = 1;
+    _TargetFadeAlpha = 0;
     if (_Manager == null)
     {
       _Manager = this;
@@ -61,7 +70,7 @@ public class LevelManager : MonoBehaviour
       Destroy(this);
     }
     EndPause();
-    _Time = -_StartingDelay;
+    _Time -= SecondsToBeats(Global._FadeDuration + _StartingDelay);
   }
 
   private void Update()
@@ -78,7 +87,7 @@ public class LevelManager : MonoBehaviour
       }
     }
 
-    if (Global._PlayingSong == null || IsPaused())
+    if (IsPaused())
     {
       return;
     }
@@ -95,7 +104,6 @@ public class LevelManager : MonoBehaviour
     _Manager = null; //Allow a new manager to be set when another level is loaded
   }
 
-
   void ManageEnd()
   {
     if (_LastBeat == -1)
@@ -111,12 +119,12 @@ public class LevelManager : MonoBehaviour
 
     if (_Health <= 0)
     {
-      LoseSong();
+      ChangeGameState(Gamestate.LoseState);
     }
 
     if (_Time > _LastBeat + _EndDelay)
     {
-      WinSong();
+      ChangeGameState(Gamestate.WinState);
     }
   }
 
@@ -140,7 +148,8 @@ public class LevelManager : MonoBehaviour
         _PlayerArrows[i]._GotPressResult = false;
         if (_PlayerArrows[i]._HeldNote != null)
         {
-          _PlayerArrows[i]._HeldNote._IsHeld = false;
+          _PlayerArrows[i]._HeldNote.ReleaseTrail();
+          _PlayerArrows[i]._HeldNote.GetHit(false);
           _PlayerArrows[i]._HeldNote = null;
         }
       }
@@ -157,10 +166,6 @@ public class LevelManager : MonoBehaviour
           Key key = collider.GetComponent<Key>();
           if (key)
           {
-            if (key._HasBeenHit)
-              continue;
-
-
             float distance = Mathf.Abs(_PlayerArrows[i].transform.position.y - collider.transform.position.y);
             if (!hitKey || distance < minDistance)
             {
@@ -203,7 +208,6 @@ public class LevelManager : MonoBehaviour
           {
             hitKey.GetHit(false);
           }
-          hitKey._HasBeenHit = true;
 
           _PlayerArrows[i].StartGlow();
         }
@@ -255,15 +259,27 @@ public class LevelManager : MonoBehaviour
   }
   void ManageEffects()
   {
-    //TODO: make zoom effects based on song
+    _FadeGroup.alpha -= 1 / Global._FadeDuration * Time.deltaTime;
     _ScreenCamera.orthographicSize = Mathf.Lerp(_ScreenCamera.orthographicSize, _DefaultZoom, _ZoomReturnSpeed * Time.deltaTime);
 
-    if (_TimeUntilNextZoom <= 0)
+
+    for (int i = 0; i < Global._PlayingSong._Effects.Count; i++)
     {
-      _ScreenCamera.orthographicSize += _ZoomPerBeat;
-      _TimeUntilNextZoom += BeatsToSeconds(1);
+      Effect effect = Global._PlayingSong._Effects[i];
+
+      if (!effect._Sent && effect._Time < _Time)
+      {
+        int type = (int)effect._Type;
+
+        switch (type)
+        {
+          case 0:
+            _ScreenCamera.orthographicSize += _ZoomPerBeat;
+            break;
+        }
+        effect._Sent = true;
+      }
     }
-    _TimeUntilNextZoom -= Time.deltaTime;
   }
 
   public void StartPause()
@@ -307,18 +323,6 @@ public class LevelManager : MonoBehaviour
     float beats = seconds * Global._PlayingSong._BPM;
     beats /= 60;
     return beats;
-  }
-
-  void LoseSong()
-  {
-    //TODO: add some lose effects
-    SceneManager.LoadScene("Main Menu");
-  }
-
-  void WinSong()
-  {
-    //TODO: add win effects
-    SceneManager.LoadScene("Main Menu");
   }
 
   //Reduce the amount of variables here when optimization is needed
