@@ -14,18 +14,23 @@ public static class JsonToSong
   public static Song SongJsonToSong(SongJson songJson)
   {
     List<Note> notes = new List<Note>();
-
-    foreach(NoteJson noteJson in songJson.Notes)
+    if (songJson.Notes != null)
     {
-      Note.Direction direction = GetDirection(noteJson.Key);
-      notes.Add(new Note(direction, noteJson.Beat, noteJson.Duration));
+      foreach (NoteJson noteJson in songJson.Notes)
+      {
+        Note.Direction direction = GetDirection(noteJson.Key);
+        notes.Add(new Note(direction, noteJson.Beat, noteJson.Duration));
+      }
     }
-    List<Effect> effects = new List<Effect>();
 
-    foreach (EffectJson effectJson in songJson.Effects)
+    List<Effect> effects = new List<Effect>();
+    if(songJson.Effects != null)
     {
-      Effect.EffectType type = GetEffect(effectJson.Effect);
-      effects.Add(new Effect(type, effectJson.Beat));
+      foreach (EffectJson effectJson in songJson.Effects)
+      {
+        Effect.EffectType type = GetEffect(effectJson.Effect);
+        effects.Add(new Effect(type, effectJson.Beat, effectJson.Scale));
+      }
     }
 
     return new Song(notes, effects, songJson.BPM, songJson.NoteSpeed);
@@ -90,4 +95,5 @@ public class EffectJson
 {
   public float Beat = 0; // when the effect plays
   public string Effect = "Zoom";
+  public float Scale = 1;
 }

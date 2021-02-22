@@ -49,11 +49,13 @@ public class Effect
   public float _Time;
   public EffectType _Type;
   public bool _Sent;
+  public float _Scale;
 
-  public Effect(EffectType type, float time, bool sent = false)
+  public Effect(EffectType type, float time, float scale, bool sent = false)
   {
     _Type = type;
     _Time = time;
+    _Scale = scale;
     _Sent = sent;
   }
 

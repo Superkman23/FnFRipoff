@@ -2355,8 +2355,9 @@ MonoBehaviour:
   _PauseMenu: {fileID: 2090689347}
   _ScreenCamera: {fileID: 519420031}
   _DefaultZoom: 5
-  _ZoomPerBeat: -0.3
   _ZoomReturnSpeed: 3
+  _FadeGroup: {fileID: 1229985210}
+  _TargetFadeAlpha: 0
   _NoteSpawnY: -6
   _NotePrefabs:
   - {fileID: 3501079431577828964, guid: 2cb0c531199165247b522c7e79fd3240, type: 3}
@@ -2368,18 +2369,16 @@ MonoBehaviour:
   - {fileID: 930739036}
   - {fileID: 967413844}
   - {fileID: 750380955}
-  _MaxHitDistance: 1
+  _MaxHitDistance: 0.7
   _PlayerArrowsY: 3
   _PressedColor: {r: 1, g: 1, b: 1, a: 1}
   _UnpressedColor: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
-  _StartingDelay: 1
+  _StartingDelay: 2
   _EndDelay: 4
   _LastBeat: -1
   _Health: 50
   _BeatText: {fileID: 771939877}
   _HealthBar: {fileID: 1823434446}
-  _FadeGroup: {fileID: 1229985210}
-  _TargetFadeAlpha: 0
 --- !u!4 &1878252218
 Transform:
   m_ObjectHideFlags: 0

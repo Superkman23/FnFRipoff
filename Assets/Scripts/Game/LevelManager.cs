@@ -19,12 +19,14 @@ public class LevelManager : MonoBehaviour
   public Gamestate _LastGamestate;
   public GameObject _PauseMenu;
 
-  [Header("Beat Zoom")]
+  [Header("Effects")]
+  //Zooming
   public Camera _ScreenCamera;
   public float _DefaultZoom;
-  public float _ZoomPerBeat;
   public float _ZoomReturnSpeed;
-  float _TimeUntilNextZoom;
+  //Fading
+  public CanvasGroup _FadeGroup;
+  public float _TargetFadeAlpha;
 
   [Header("Notes")]
   public float _NoteSpawnY = -6;
@@ -39,7 +41,7 @@ public class LevelManager : MonoBehaviour
 
   [Header("Song")] //All in beats
   float _Time; //Current time
-  public int _StartingDelay; // time before the song starts (in seconds)
+  public int _StartingDelay; // beats before the song starts
   public int _EndDelay;  // how many beats before the song ends
   [HideInInspector] public float _LastBeat = -1; // when do notes stop coming
 
@@ -47,10 +49,6 @@ public class LevelManager : MonoBehaviour
   public float _Health = 50;
   public Text _BeatText;
   public Image _HealthBar;
-
-  [Header("Fading")]
-  public CanvasGroup _FadeGroup;
-  public float _TargetFadeAlpha;
 
   private void Awake()
   {
@@ -70,12 +68,12 @@ public class LevelManager : MonoBehaviour
       Destroy(this);
     }
     EndPause();
-    _Time -= SecondsToBeats(Global._FadeDuration + _StartingDelay);
+    _Time -= SecondsToBeats(Global._FadeDuration) + _StartingDelay;
   }
 
   private void Update()
   {
-    if (Input.GetKeyDown(KeyCode.Return) && _Gamestate != Gamestate.LoseState)
+    if (Input.GetKeyDown(KeyCode.Return) && _Gamestate != Gamestate.LoseState && _Gamestate != Gamestate.WinState)
     {
       if (!IsPaused())
       {
@@ -91,6 +89,23 @@ public class LevelManager : MonoBehaviour
     {
       return;
     }
+
+
+    if(_Gamestate == Gamestate.WinState)
+    {
+      _FadeGroup.alpha += 1 / Global._FadeDuration * Time.deltaTime;
+      if(_FadeGroup.alpha == 1)
+      {
+        SceneManager.LoadScene("Main Menu");
+      }
+      return;
+    }
+
+    if(_Gamestate == Gamestate.LoseState)
+    {
+      SceneManager.LoadScene("Main Menu");
+    }
+
 
     ManageEnd();
     ManageArrows();
@@ -116,6 +131,8 @@ public class LevelManager : MonoBehaviour
           _LastBeat = note._Time + note._Duration;
       }
     }
+
+
 
     if (_Health <= 0)
     {
@@ -159,7 +176,7 @@ public class LevelManager : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapBoxAll(_PlayerArrows[i].transform.position, Vector2.one * _MaxHitDistance, 0);
         Key hitKey = null;
 
-        float minDistance = 10f;
+        float minDistance = _MaxHitDistance;
 
         foreach (Collider2D collider in colliders)
         {
@@ -167,7 +184,7 @@ public class LevelManager : MonoBehaviour
           if (key)
           {
             float distance = Mathf.Abs(_PlayerArrows[i].transform.position.y - collider.transform.position.y);
-            if (!hitKey || distance < minDistance)
+            if (distance < _MaxHitDistance && (!hitKey || distance < minDistance))
             {
               hitKey = key;
               minDistance = distance;
@@ -177,7 +194,7 @@ public class LevelManager : MonoBehaviour
 
         if (hitKey)
         {
-          if (minDistance < _MaxHitDistance * 0.07f)
+          if (minDistance < _MaxHitDistance * 0.1f)
           {
             Debug.Log("PERFECT!");
             _Health += Global._HealthPerHit * 1.2f;
@@ -187,7 +204,7 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Great!");
             _Health += Global._HealthPerHit;
           }
-          else if(minDistance < _MaxHitDistance * 0.7f)
+          else if(minDistance < _MaxHitDistance * 0.6f)
           {
             Debug.Log("Good.");
             _Health += Global._HealthPerHit * 0.8f;
@@ -260,6 +277,7 @@ public class LevelManager : MonoBehaviour
   void ManageEffects()
   {
     _FadeGroup.alpha -= 1 / Global._FadeDuration * Time.deltaTime;
+
     _ScreenCamera.orthographicSize = Mathf.Lerp(_ScreenCamera.orthographicSize, _DefaultZoom, _ZoomReturnSpeed * Time.deltaTime);
 
 
@@ -274,7 +292,7 @@ public class LevelManager : MonoBehaviour
         switch (type)
         {
           case 0:
-            _ScreenCamera.orthographicSize += _ZoomPerBeat;
+            _ScreenCamera.orthographicSize += effect._Scale * 0.2f;
             break;
         }
         effect._Sent = true;
@@ -291,16 +309,9 @@ public class LevelManager : MonoBehaviour
     ChangeGameState(Gamestate.GameplayState);
   }
 
-  public void MissNote(float damage = -1)
+  public void MissNote(float damage)
   {
-    if (damage < 0)
-    {
-      _Health += Global._HealthPerMiss;
-    }
-    else
-    {
-      _Health += damage;
-    }
+    _Health += damage;
   }
   public float BeatsToSeconds(float beats)
   {

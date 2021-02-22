@@ -51,7 +51,7 @@ public class Key : MonoBehaviour
     if (missed)
     {
       ReleaseTrail();
-      LevelManager._Manager.MissNote();
+      LevelManager._Manager.MissNote(Global._HealthPerMiss);
     }
     Destroy(gameObject);
   }
