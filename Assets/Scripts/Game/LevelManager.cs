@@ -1,15 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
+  public enum Gamestate
+  {
+    GameplayState,
+    PauseState,
+    LoseState
+  };
+
   public static LevelManager _Manager; // Used so I dont need to give every single object that edits health n stuff a reference to the active manager because that is kind of annoying to do
 
-  [Header("Menu Stuff")]
-  public bool _Paused;
+  [Header("General Stuff")]
+  public Gamestate _Gamestate;
+  public Gamestate _LastGamestate;
   public GameObject _PauseMenu;
 
   [Header("Beat Zoom")]
@@ -25,6 +31,7 @@ public class LevelManager : MonoBehaviour
 
   [Header("Arrows")]
   public Arrow[] _PlayerArrows; // Order is Left Down Up Right
+  public float _MaxHitDistance = 1; //overlap to check for notes
   public float _PlayerArrowsY;
   public Color _PressedColor;
   public Color _UnpressedColor;
@@ -59,15 +66,19 @@ public class LevelManager : MonoBehaviour
 
   private void Update()
   {
-    if (Input.GetKeyDown(KeyCode.Return))
+    if (Input.GetKeyDown(KeyCode.Return) && _Gamestate != Gamestate.LoseState)
     {
-      if (!_Paused)
+      if (!IsPaused())
       {
         StartPause();
       }
+      else
+      {
+        EndPause();
+      }
     }
 
-    if (Global._PlayingSong == null || _Paused)
+    if (Global._PlayingSong == null || IsPaused())
     {
       return;
     }
@@ -121,17 +132,12 @@ public class LevelManager : MonoBehaviour
           _PlayerArrows[i].StartGlow();
           _Health += SecondsToBeats(Time.deltaTime) * Global._HealthPerHit;
         }
-        _PlayerArrows[i]._PressedTime += Time.deltaTime;
+        _PlayerArrows[i]._Pressed = true;
       }
       else
       {
-        if (!_PlayerArrows[i]._HitThisPress && _PlayerArrows[i]._PressedTime > 0)
-        {
-          MissNote(Global._HealthPerMiss / 2);
-        }
-        _PlayerArrows[i]._PressedTime = 0;
-        _PlayerArrows[i]._HitThisPress = false;
-
+        _PlayerArrows[i]._Pressed = false;
+        _PlayerArrows[i]._GotPressResult = false;
         if (_PlayerArrows[i]._HeldNote != null)
         {
           _PlayerArrows[i]._HeldNote._IsHeld = false;
@@ -139,15 +145,9 @@ public class LevelManager : MonoBehaviour
         }
       }
 
-      if (_PlayerArrows[i]._PressedTime > Global._MaxArrowPressTime && !_PlayerArrows[i]._HitThisPress)
+      if (_PlayerArrows[i]._Pressed && _PlayerArrows[i]._GotPressResult == false)
       {
-        MissNote(Global._HealthPerMiss / 2);
-        _PlayerArrows[i]._HitThisPress = true;
-      }
-
-      if (_PlayerArrows[i]._PressedTime <= Global._MaxArrowPressTime && _PlayerArrows[i]._PressedTime > 0 && !_PlayerArrows[i]._HitThisPress)
-      {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(_PlayerArrows[i].transform.position, Vector2.one, 0);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(_PlayerArrows[i].transform.position, Vector2.one * _MaxHitDistance, 0);
         Key hitKey = null;
 
         float minDistance = 10f;
@@ -169,19 +169,20 @@ public class LevelManager : MonoBehaviour
             }
           }
         }
+
         if (hitKey)
         {
-          if (minDistance < 0.05f)
+          if (minDistance < _MaxHitDistance * 0.07f)
           {
             Debug.Log("PERFECT!");
             _Health += Global._HealthPerHit * 1.2f;
           }
-          else if (minDistance < 0.4f)
+          else if (minDistance < _MaxHitDistance * 0.4f)
           {
             Debug.Log("Great!");
             _Health += Global._HealthPerHit;
           }
-          else if(minDistance < 0.9f)
+          else if(minDistance < _MaxHitDistance * 0.7f)
           {
             Debug.Log("Good.");
             _Health += Global._HealthPerHit * 0.8f;
@@ -205,8 +206,12 @@ public class LevelManager : MonoBehaviour
           hitKey._HasBeenHit = true;
 
           _PlayerArrows[i].StartGlow();
-          _PlayerArrows[i]._HitThisPress = true;
         }
+        else
+        {
+          MissNote(Global._HealthPerMiss / 2);
+        }
+        _PlayerArrows[i]._GotPressResult = true;
       }
     }
   }
@@ -263,13 +268,11 @@ public class LevelManager : MonoBehaviour
 
   public void StartPause()
   {
-    _Paused = true;
-    _PauseMenu.SetActive(true);
+    ChangeGameState(Gamestate.PauseState);
   }
   public void EndPause()
   {
-    _Paused = false;
-    _PauseMenu.SetActive(false);
+    ChangeGameState(Gamestate.GameplayState);
   }
 
   public void MissNote(float damage = -1)
@@ -337,6 +340,13 @@ public class LevelManager : MonoBehaviour
     return distance * percentExtra;
   }
 
+  void ChangeGameState(Gamestate state)
+  {
+    _LastGamestate = _Gamestate;
+    _Gamestate = state;
+
+    _PauseMenu.SetActive(state == Gamestate.PauseState);
+  }
 
 
   bool[] GetInput()
@@ -349,5 +359,10 @@ public class LevelManager : MonoBehaviour
     input[3] = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow); // Right
     return input;
 
+  }
+
+  public static bool IsPaused()
+  {
+    return _Manager._Gamestate == Gamestate.PauseState;
   }
 }

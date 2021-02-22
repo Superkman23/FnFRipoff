@@ -1,13 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class KeyTrail : MonoBehaviour
 {
   public float _MoveSpeed;
+  public SpriteRenderer _Renderer;
+  private void Awake()
+  {
+    _Renderer = GetComponent<SpriteRenderer>();
+  }
+
   void Update()
   {
-    if(transform.parent == null && !LevelManager._Manager._Paused)
+    if(transform.parent == null && !LevelManager.IsPaused())
     {
       transform.Translate(Vector3.up * _MoveSpeed * Time.deltaTime);
 

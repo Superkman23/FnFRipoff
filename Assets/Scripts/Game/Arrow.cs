@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
   [HideInInspector] public SpriteRenderer _Renderer;
-  public float _PressedTime = 0;
-  public bool _HitThisPress = false;
+  public bool _Pressed = false;
+  public bool _GotPressResult = false;
   public Key _HeldNote;
 
 
@@ -25,7 +23,7 @@ public class Arrow : MonoBehaviour
 
   private void Update()
   {
-    if (_PressedTime > 0)
+    if (_Pressed)
     {
       _Renderer.color = _PressedColor;
     }

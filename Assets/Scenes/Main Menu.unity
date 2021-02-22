@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb4ddd5fb04b4b40910638c26e798e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Columns: 2
+  _Columns: 4
   _FileNames: []
   _ButtonParent: {fileID: 793822383}
   _OptionsMenu: {fileID: 169562309}
@@ -833,8 +833,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -125, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -158.02, y: 0}
+  m_SizeDelta: {x: 176.031, y: 35.89685}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1683196261
 MonoBehaviour:
@@ -858,11 +858,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_FontSize: 31
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
+    m_MinSize: 0
+    m_MaxSize: 300
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
