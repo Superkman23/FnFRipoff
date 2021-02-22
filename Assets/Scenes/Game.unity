@@ -421,7 +421,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1025,13 +1025,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 5
     m_MaxSize: 50
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Beat: '
+  m_Text: 'Beat:'
 --- !u!222 &771939878
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1699,8 +1699,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0017395, y: 0.00020981}
-  m_SizeDelta: {x: 1920.0039, y: 1080.0004}
+  m_AnchoredPosition: {x: 0.000103, y: 0.00020981}
+  m_SizeDelta: {x: 1920.0002, y: 1080.0004}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1229985210
 CanvasGroup:
@@ -2308,7 +2308,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.499
+  m_FillAmount: 0.588
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2358,6 +2358,7 @@ MonoBehaviour:
   _ZoomReturnSpeed: 3
   _FadeGroup: {fileID: 1229985210}
   _TargetFadeAlpha: 0
+  _HitTextPrefab: {fileID: 4247595448132134133, guid: c0c5debaa2b96cc4fb747977ddbe338b, type: 3}
   _NoteSpawnY: -6
   _NotePrefabs:
   - {fileID: 3501079431577828964, guid: 2cb0c531199165247b522c7e79fd3240, type: 3}
@@ -2369,7 +2370,7 @@ MonoBehaviour:
   - {fileID: 930739036}
   - {fileID: 967413844}
   - {fileID: 750380955}
-  _MaxHitDistance: 0.7
+  _MaxHitDistance: 1
   _PlayerArrowsY: 3
   _PressedColor: {r: 1, g: 1, b: 1, a: 1}
   _UnpressedColor: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}

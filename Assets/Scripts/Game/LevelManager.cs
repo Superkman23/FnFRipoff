@@ -26,7 +26,8 @@ public class LevelManager : MonoBehaviour
   public float _ZoomReturnSpeed;
   //Fading
   public CanvasGroup _FadeGroup;
-  public float _TargetFadeAlpha;
+  //Hit Text
+  public GameObject _HitTextPrefab;
 
   [Header("Notes")]
   public float _NoteSpawnY = -6;
@@ -58,7 +59,6 @@ public class LevelManager : MonoBehaviour
     }
 
     _FadeGroup.alpha = 1;
-    _TargetFadeAlpha = 0;
     if (_Manager == null)
     {
       _Manager = this;
@@ -191,28 +191,29 @@ public class LevelManager : MonoBehaviour
             }
           }
         }
-
         if (hitKey)
         {
-          if (minDistance < _MaxHitDistance * 0.1f)
+          HitText hit = Instantiate(_HitTextPrefab, Vector3.zero, Quaternion.identity).GetComponent<HitText>();
+
+          if (minDistance < _MaxHitDistance * 0.05f)
           {
-            Debug.Log("PERFECT!");
+            hit._Text.text = "Perfect!";
             _Health += Global._HealthPerHit * 1.2f;
           }
-          else if (minDistance < _MaxHitDistance * 0.4f)
+          else if (minDistance < _MaxHitDistance * 0.2f)
           {
-            Debug.Log("Great!");
+            hit._Text.text = "Great!";
             _Health += Global._HealthPerHit;
           }
           else if(minDistance < _MaxHitDistance * 0.6f)
           {
-            Debug.Log("Good.");
+            hit._Text.text = "Good";
             _Health += Global._HealthPerHit * 0.8f;
           }
           else
           {
-            Debug.Log("Bad.");
-            _Health += Global._HealthPerHit * 0.5f;
+            hit._Text.text = "Bad...";
+            _Health += Global._HealthPerHit * 0.2f;
           }
 
           if (hitKey._Duration != 0)
