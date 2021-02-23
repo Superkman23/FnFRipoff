@@ -94,5 +94,63 @@
       "Beat": 12.4,
       "Key": "Down"
     }
+  ],
+  "Effects": [
+    {
+      "Beat": 0,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 1,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 2,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 3,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 4,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 5,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 6,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 7,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 8,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 9,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 10,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 11,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 12,
+      "Type": "Zoom"
+    },
+    {
+      "Beat": 13,
+      "Type": "Zoom"
+    }
   ]
 }
