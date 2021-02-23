@@ -35,16 +35,20 @@ public class LevelManager : MonoBehaviour
 
   [Header("Arrows")]
   public Arrow[] _PlayerArrows; // Order is Left Down Up Right
-  public float _MaxHitDistance = 1; //overlap to check for notes
-  public float _PlayerArrowsY;
+  public Transform _PlayerArrowsTransform;
+  [Range(0, 1)] public float _MaxHitDistance = 1; // If notes are outside here dont even bother checking them, you can't hit them
+  [Range(0, 1)] public float _PerfectHitRange = 0.05f;
+  [Range(0, 1)] public float _GreatHitRange = 0.4f;
+  [Range(0, 1)] public float _GoodHitRange = 0.7f;
+
   public Color _PressedColor;
   public Color _UnpressedColor;
 
-  [Header("Song")] //All in beats
-  float _Time; //Current time
+  [Header("Song")] // All in beats
+  float _Time; // Current time
   public int _StartingDelay; // beats before the song starts
   public int _EndDelay;  // how many beats before the song ends
-  [HideInInspector] public float _LastBeat = -1; // when do notes stop coming
+  [HideInInspector] public float _LastBeat = -1; // When is there nothing left to play?
 
   [Header("Misc")]
   public float _Health = 50;
@@ -119,6 +123,19 @@ public class LevelManager : MonoBehaviour
   private void OnDestroy()
   {
     _Manager = null; //Allow a new manager to be set when another level is loaded
+  }
+
+  private void OnDrawGizmos()
+  {
+    Gizmos.color = Color.red;
+    for (int i = 0; i < _PlayerArrows.Length; i++)
+    {
+      // Multiplying by 2 to make it a distance to 0 rather than distance across, provides a better visual
+      Gizmos.DrawWireCube(_PlayerArrows[i].transform.position, Vector3.one * 2 * _MaxHitDistance);
+      Gizmos.DrawWireCube(_PlayerArrows[i].transform.position, Vector3.one * 2 * _MaxHitDistance * _PerfectHitRange);
+      Gizmos.DrawWireCube(_PlayerArrows[i].transform.position, Vector3.one * 2 * _MaxHitDistance * _GreatHitRange);
+      Gizmos.DrawWireCube(_PlayerArrows[i].transform.position, Vector3.one * 2 * _MaxHitDistance * _GoodHitRange);
+    }
   }
 
   void ManageEnd()
@@ -198,15 +215,15 @@ public class LevelManager : MonoBehaviour
         {
 
           HitText hit = Instantiate(_HitTextPrefab, Vector3.zero, Quaternion.identity).GetComponent<HitText>();
-          if (minDistance < _MaxHitDistance * 0.05f)
+          if (minDistance < _MaxHitDistance * _PerfectHitRange)
           {
             hit._Text.text = "Perfect!";
           }
-          else if (minDistance < _MaxHitDistance * 0.2f)
+          else if (minDistance < _MaxHitDistance * _GreatHitRange)
           {
             hit._Text.text = "Great!";
           }
-          else if(minDistance < _MaxHitDistance * 0.6f)
+          else if(minDistance < _MaxHitDistance * _GoodHitRange)
           {
             hit._Text.text = "Good";
           }
@@ -347,7 +364,7 @@ public class LevelManager : MonoBehaviour
   float GetSendBeat(float hitBeat)
   {
     float hitTime = BeatsToSeconds(hitBeat);
-    float distance = Mathf.Abs(_NoteSpawnY - _PlayerArrowsY);
+    float distance = Mathf.Abs(_NoteSpawnY - _PlayerArrowsTransform.position.y);
     float timeToCross = distance / Global._PlayingSong._NoteSpeed * Global._NoteSpeedMultiplier;
 
     return SecondsToBeats(hitTime - timeToCross);
@@ -355,7 +372,7 @@ public class LevelManager : MonoBehaviour
   float DistanceFromExtraBeats(float beats)
   {
     float time = BeatsToSeconds(beats);
-    float distance = Mathf.Abs(_NoteSpawnY - _PlayerArrowsY);
+    float distance = Mathf.Abs(_NoteSpawnY - _PlayerArrowsTransform.position.y);
     float timeToCross = distance / Global._PlayingSong._NoteSpeed * Global._NoteSpeedMultiplier;
     float percentExtra = time / timeToCross;
 

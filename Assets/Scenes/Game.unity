@@ -2450,8 +2450,11 @@ MonoBehaviour:
   - {fileID: 930739036}
   - {fileID: 967413844}
   - {fileID: 750380955}
-  _MaxHitDistance: 1
-  _PlayerArrowsY: 3
+  _PlayerArrowsTransform: {fileID: 1232212240}
+  _MaxHitDistance: 0.5
+  _PerfectHitRange: 0.1
+  _GreatHitRange: 0.3
+  _GoodHitRange: 0.7
   _PressedColor: {r: 1, g: 1, b: 1, a: 1}
   _UnpressedColor: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
   _StartingDelay: 2
