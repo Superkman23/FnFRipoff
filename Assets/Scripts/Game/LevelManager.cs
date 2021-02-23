@@ -50,6 +50,8 @@ public class LevelManager : MonoBehaviour
   public float _Health = 50;
   public Text _BeatText;
   public Image _HealthBar;
+  public Text _ScoreText;
+  public int _Score;
 
   private void Awake()
   {
@@ -193,28 +195,28 @@ public class LevelManager : MonoBehaviour
         }
         if (hitKey)
         {
-          HitText hit = Instantiate(_HitTextPrefab, Vector3.zero, Quaternion.identity).GetComponent<HitText>();
 
+          HitText hit = Instantiate(_HitTextPrefab, Vector3.zero, Quaternion.identity).GetComponent<HitText>();
           if (minDistance < _MaxHitDistance * 0.05f)
           {
             hit._Text.text = "Perfect!";
-            _Health += Global._HealthPerHit * 1.2f;
           }
           else if (minDistance < _MaxHitDistance * 0.2f)
           {
             hit._Text.text = "Great!";
-            _Health += Global._HealthPerHit;
           }
           else if(minDistance < _MaxHitDistance * 0.6f)
           {
             hit._Text.text = "Good";
-            _Health += Global._HealthPerHit * 0.8f;
           }
           else
           {
             hit._Text.text = "Bad...";
-            _Health += Global._HealthPerHit * 0.2f;
           }
+
+          float percent = Mathf.Abs(1 - (minDistance / _MaxHitDistance));
+          _Score += Mathf.RoundToInt(200 * percent);
+          _Health += Mathf.RoundToInt(Global._HealthPerHit * percent);
 
           if (hitKey._Duration != 0)
           {
@@ -232,6 +234,7 @@ public class LevelManager : MonoBehaviour
         else
         {
           MissNote(Global._HealthPerMiss / 2);
+          _Score -= 10;
         }
         _PlayerArrows[i]._GotPressResult = true;
       }
@@ -270,7 +273,9 @@ public class LevelManager : MonoBehaviour
   }
   void ManageUI()
   {
-    _BeatText.text = "Beat: " + (int)_Time;
+    _BeatText.text = "Beat: " + Mathf.Floor(_Time);
+
+    _ScoreText.text = "Score: " + _Score;
 
     _Health = Mathf.Clamp(_Health, 0, 100);
     _HealthBar.fillAmount = Mathf.Lerp(_HealthBar.fillAmount, _Health / 100, 6f * Time.deltaTime);
