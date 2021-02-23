@@ -157,8 +157,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -396}
-  m_SizeDelta: {x: 170, y: 150}
+  m_AnchoredPosition: {x: -36.2, y: -399}
+  m_SizeDelta: {x: 1436.4194, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &117571310
 MonoBehaviour:
@@ -181,19 +181,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 45
+    m_Font: {fileID: 12800000, guid: 41d8fd4b289a7cd4a972c817cd7bb31a, type: 2}
+    m_FontSize: 0
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 50
+    m_MaxSize: 180
     m_Alignment: 1
-    m_AlignByGeometry: 0
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Score:'
+  m_Text: '!123'
 --- !u!222 &117571311
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2458,6 +2458,7 @@ MonoBehaviour:
   _GoodHitRange: 0.7
   _PressedColor: {r: 1, g: 1, b: 1, a: 1}
   _UnpressedColor: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
+  _Time: 0
   _StartingDelay: 2
   _EndDelay: 4
   _LastBeat: -1
