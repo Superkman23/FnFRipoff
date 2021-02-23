@@ -12,6 +12,6 @@ public static class Global
   public static float _HealthPerMiss = -4;
 
   //Fade Settings
-  public static float _FadeDuration = 0.3f;
+  public static float _FadeDuration = 1f;
 
 }

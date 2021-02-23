@@ -57,6 +57,8 @@ public class LevelManager : MonoBehaviour
   public Text _ScoreText;
   public float _Score;
   public AnimationCurve _ScoreScaling;
+  public AudioSource _Backing;
+  bool _StartedSong;
 
   private void Awake()
   {
@@ -76,10 +78,19 @@ public class LevelManager : MonoBehaviour
     }
     EndPause();
     _Time -= SecondsToBeats(Global._FadeDuration) + _StartingDelay;
+
+    _Backing.clip = Global._PlayingSong._BackTrack;
   }
 
   private void Update()
   {
+    if(_Time > 0 && !_StartedSong)
+    {
+      _Backing.time = BeatsToSeconds(_Time);
+      _Backing.Play();
+      _StartedSong = true;
+    }
+
     if (Input.GetKeyDown(KeyCode.Return) && _Gamestate != Gamestate.LoseState && _Gamestate != Gamestate.WinState)
     {
       if (!IsPaused())

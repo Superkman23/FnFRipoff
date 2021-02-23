@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 //TODO: add music
 public class Song
 {
@@ -6,13 +7,14 @@ public class Song
   public List<Effect> _Effects;
   public float _BPM;
   public float _NoteSpeed;
-
-  public Song(List<Note> notes, List<Effect> effects, float bpm, float noteSpeed)
+  public AudioClip _BackTrack;
+  public Song(List<Note> notes, List<Effect> effects, AudioClip backtrack, float bpm, float noteSpeed)
   {
     _Notes = notes;
     _Effects = effects;
     _BPM = bpm;
     _NoteSpeed = noteSpeed;
+    _BackTrack = backtrack;
   }
 }
 
