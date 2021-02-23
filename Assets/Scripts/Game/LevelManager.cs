@@ -51,7 +51,7 @@ public class LevelManager : MonoBehaviour
   public Text _BeatText;
   public Image _HealthBar;
   public Text _ScoreText;
-  public int _Score;
+  public float _Score;
 
   private void Awake()
   {
@@ -158,6 +158,7 @@ public class LevelManager : MonoBehaviour
         {
           _PlayerArrows[i].StartGlow();
           _Health += SecondsToBeats(Time.deltaTime) * Global._HealthPerHit;
+          _Score += SecondsToBeats(Time.deltaTime) * 100;
         }
         _PlayerArrows[i]._Pressed = true;
       }
@@ -215,7 +216,7 @@ public class LevelManager : MonoBehaviour
           }
 
           float percent = Mathf.Abs(1 - (minDistance / _MaxHitDistance));
-          _Score += Mathf.RoundToInt(200 * percent);
+          _Score += Mathf.RoundToInt(100 * percent);
           _Health += Mathf.RoundToInt(Global._HealthPerHit * percent);
 
           if (hitKey._Duration != 0)
@@ -275,7 +276,7 @@ public class LevelManager : MonoBehaviour
   {
     _BeatText.text = "Beat: " + Mathf.Floor(_Time);
 
-    _ScoreText.text = "Score: " + _Score;
+    _ScoreText.text = "Score:\n" + Mathf.RoundToInt(_Score);
 
     _Health = Mathf.Clamp(_Health, 0, 100);
     _HealthBar.fillAmount = Mathf.Lerp(_HealthBar.fillAmount, _Health / 100, 6f * Time.deltaTime);
