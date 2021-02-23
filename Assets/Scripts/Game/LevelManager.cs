@@ -91,9 +91,7 @@ public class LevelManager : MonoBehaviour
       _StartedSong = true;
     }
 
-    if (Input.GetKeyDown(KeyCode.Return) && 
-      _Gamestate != Gamestate.LoseState &&
-      _Gamestate != Gamestate.WinState)
+    if (Input.GetKeyDown(KeyCode.Return) && _Gamestate != Gamestate.LoseState && _Gamestate != Gamestate.WinState)
     {
       if (!IsPaused())
       {
@@ -104,7 +102,6 @@ public class LevelManager : MonoBehaviour
         EndPause();
       }
     }
-
     if (IsPaused())
     {
       return;
@@ -124,9 +121,7 @@ public class LevelManager : MonoBehaviour
       SceneManager.LoadScene("Main Menu");
     }
 
-
-
-    if (_StartedSong)
+    if (_StartedSong && _Backing.clip != null)
     {
       _Time = SecondsToBeats(_Backing.time);
     }

@@ -14,4 +14,6 @@ public static class Global
   //Fade Settings
   public static float _FadeDuration = 1f;
 
+  public static int _TargetFrameRate = 60;
+
 }

@@ -23,6 +23,7 @@ public class MainMenu : MonoBehaviour
 
   private void Start()
   {
+    Application.targetFrameRate = Global._TargetFrameRate;
     CreateMenuButtons();
     OpenSongMenu();
     _NoteSpeedSlider.value = Global._NoteSpeedMultiplier;
