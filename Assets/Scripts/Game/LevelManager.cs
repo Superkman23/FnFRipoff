@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
   public Color _UnpressedColor;
 
   [Header("Song")] // All in beats
-  float _Time; // Current time
+  public float _Time; // Current time
   public int _StartingDelay; // beats before the song starts
   public int _EndDelay;  // how many beats before the song ends
   [HideInInspector] public float _LastBeat = -1; // When is there nothing left to play?
@@ -66,6 +66,7 @@ public class LevelManager : MonoBehaviour
     {
       Global._PlayingSong = JsonToSong.GetSong("TestSong");
     }
+    _Backing.clip = Global._PlayingSong._BackTrack;
 
     _FadeGroup.alpha = 1;
     if (_Manager == null)
@@ -77,9 +78,8 @@ public class LevelManager : MonoBehaviour
       Destroy(this);
     }
     EndPause();
-    _Time -= SecondsToBeats(Global._FadeDuration) + _StartingDelay;
 
-    _Backing.clip = Global._PlayingSong._BackTrack;
+    _Time -= SecondsToBeats(Global._FadeDuration) + _StartingDelay;
   }
 
   private void Update()
@@ -91,7 +91,9 @@ public class LevelManager : MonoBehaviour
       _StartedSong = true;
     }
 
-    if (Input.GetKeyDown(KeyCode.Return) && _Gamestate != Gamestate.LoseState && _Gamestate != Gamestate.WinState)
+    if (Input.GetKeyDown(KeyCode.Return) && 
+      _Gamestate != Gamestate.LoseState &&
+      _Gamestate != Gamestate.WinState)
     {
       if (!IsPaused())
       {
@@ -108,22 +110,34 @@ public class LevelManager : MonoBehaviour
       return;
     }
 
-
-    if(_Gamestate == Gamestate.WinState)
+    if (_Gamestate == Gamestate.WinState)
     {
       _FadeGroup.alpha += 1 / Global._FadeDuration * Time.deltaTime;
-      if(_FadeGroup.alpha == 1)
+      if (_FadeGroup.alpha == 1)
       {
         SceneManager.LoadScene("Main Menu");
       }
       return;
     }
-
-    if(_Gamestate == Gamestate.LoseState)
+    if (_Gamestate == Gamestate.LoseState)
     {
       SceneManager.LoadScene("Main Menu");
     }
 
+
+
+    if (_StartedSong)
+    {
+      _Time = SecondsToBeats(_Backing.time);
+    }
+    else
+    {
+      float elapsedTime = SecondsToBeats(Time.deltaTime);
+      if (elapsedTime != -1)
+      {
+        _Time += elapsedTime;
+      }
+    }
 
     ManageEnd();
     ManageArrows();
@@ -152,6 +166,7 @@ public class LevelManager : MonoBehaviour
 
   void ManageEnd()
   {
+
     if (_LastBeat == -1)
     {
       for (int i = 0; i < Global._PlayingSong._Notes.Count; i++)
@@ -162,8 +177,6 @@ public class LevelManager : MonoBehaviour
           _LastBeat = note._Time + note._Duration;
       }
     }
-
-
 
     if (_Health <= 0)
     {
@@ -293,13 +306,6 @@ public class LevelManager : MonoBehaviour
         key.UpdateVariables();
       }
     }
-
-
-    float elapsedTime = SecondsToBeats(Time.deltaTime);
-    if (elapsedTime != -1)
-    {
-      _Time += elapsedTime;
-    }
   }
   void ManageUI()
   {
@@ -381,7 +387,7 @@ public class LevelManager : MonoBehaviour
 
     return SecondsToBeats(hitTime - timeToCross);
   }
-  float DistanceFromExtraBeats(float beats)
+  public float DistanceFromExtraBeats(float beats)
   {
     float time = BeatsToSeconds(beats);
     float distance = Mathf.Abs(_NoteSpawnY - _PlayerArrowsTransform.position.y);
@@ -393,10 +399,18 @@ public class LevelManager : MonoBehaviour
 
   void ChangeGameState(Gamestate state)
   {
+    _PauseMenu.SetActive(state == Gamestate.PauseState);
+    if(state == Gamestate.PauseState || state == Gamestate.WinState)
+    {
+      _Backing.Pause();
+    } 
+    else if(_Gamestate == Gamestate.PauseState) 
+    {
+      _Backing.UnPause();
+    }
+
     _LastGamestate = _Gamestate;
     _Gamestate = state;
-
-    _PauseMenu.SetActive(state == Gamestate.PauseState);
   }
 
 
