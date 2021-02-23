@@ -56,6 +56,7 @@ public class LevelManager : MonoBehaviour
   public Image _HealthBar;
   public Text _ScoreText;
   public float _Score;
+  public AnimationCurve _ScoreScaling;
 
   private void Awake()
   {
@@ -229,12 +230,12 @@ public class LevelManager : MonoBehaviour
           }
           else
           {
-            hit._Text.text = "Bad...";
+            hit._Text.text = "Ok.";
           }
 
           float percent = Mathf.Abs(1 - (minDistance / _MaxHitDistance));
-          _Score += Mathf.RoundToInt(100 * percent);
-          _Health += Mathf.RoundToInt(Global._HealthPerHit * percent);
+          _Score += Mathf.RoundToInt(_ScoreScaling.Evaluate(percent) * 100);
+          _Health += Mathf.RoundToInt(Global._HealthPerHit * _ScoreScaling.Evaluate(percent));
 
           if (hitKey._Duration != 0)
           {
