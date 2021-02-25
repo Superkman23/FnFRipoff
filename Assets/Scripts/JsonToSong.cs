@@ -34,7 +34,7 @@ public static class JsonToSong
       }
     }
     AudioClip clip = GetSongBackTrack(songJson.Backtrack);
-
+    Global._IsSongLoaded = true;
     return new Song(notes, effects, clip, songJson.BPM, songJson.NoteSpeed);
   }
   public static AudioClip GetSongBackTrack(string trackName)

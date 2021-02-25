@@ -62,10 +62,12 @@ public class LevelManager : MonoBehaviour
 
   private void Awake()
   {
-    if (Global._PlayingSong == null) //Song didnt properly load, load a default one instead.
+    if (Global._PlayingSong == null) //Song didnt properly load, don't start doing anything
     {
-      Global._PlayingSong = JsonToSong.GetSong("TestSong");
+      SceneManager.LoadScene("Main Menu");
+      return;
     }
+
     _Backing.clip = Global._PlayingSong._BackTrack;
 
     _FadeGroup.alpha = 1;

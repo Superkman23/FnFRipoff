@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-//TODO: add music
+
 public class Song
 {
   public List<Note> _Notes;

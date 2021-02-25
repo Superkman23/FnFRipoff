@@ -2,6 +2,7 @@
 
 public static class Global
 {
+  public static bool _IsSongLoaded = false;
   public static Song _PlayingSong;
 
   //Difficulty Settings
@@ -15,5 +16,4 @@ public static class Global
   public static float _FadeDuration = 1f;
 
   public static int _TargetFrameRate = 60;
-
 }

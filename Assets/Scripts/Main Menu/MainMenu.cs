@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour
   public Transform _OptionsMenu;
   public Transform _SongMenu;
 
+  public CanvasGroup _FadeCanvas;
 
   [Header("Difficulty Sliders")]
   public Slider _NoteSpeedSlider;
@@ -27,6 +28,20 @@ public class MainMenu : MonoBehaviour
     CreateMenuButtons();
     OpenSongMenu();
     _NoteSpeedSlider.value = Global._NoteSpeedMultiplier;
+    _FadeCanvas.alpha = 0;
+  }
+
+  private void Update()
+  {
+    if (Global._IsSongLoaded)
+    {
+      _FadeCanvas.alpha += Time.deltaTime;
+    }
+    if(_FadeCanvas.alpha >= 1)
+    {
+      Global._IsSongLoaded = false;
+      SceneManager.LoadScene("Game");
+    }
   }
 
   void CreateMenuButtons()
@@ -38,7 +53,6 @@ public class MainMenu : MonoBehaviour
     {
       rows++;
     }
-
 
     int targetRow = 0;
     int targetColumn = -1;
@@ -66,8 +80,12 @@ public class MainMenu : MonoBehaviour
     }
   }
 
+  public void LoadSong(string songName)
+  {
+    Global._PlayingSong = JsonToSong.GetSong(songName);
+  }
 
-
+  #region Menu Buttons
   public void OpenOptionsMenu()
   {
     _OptionsMenu.gameObject.SetActive(true);
@@ -78,18 +96,9 @@ public class MainMenu : MonoBehaviour
     _OptionsMenu.gameObject.SetActive(false);
     _SongMenu.gameObject.SetActive(true);
   }
-  public void LoadSong(string songName)
-  {
-    Global._PlayingSong = JsonToSong.GetSong(songName);
-    SceneManager.LoadScene("Game");
-  }
-
   public void SetNoteSpeed()
   {
     Global._NoteSpeedMultiplier = _NoteSpeedSlider.value;
   }
-  public void SetColliderSize()
-  {
-    //Global._HitColliderSize = _ColliderSizeSlider.value;
-  }
+  #endregion
 }
