@@ -5,15 +5,17 @@ using System.IO;
 
 public static class JsonToSong
 {
-  public static Song GetSong(string songName)
+  public static SongJson GetSongJson(string songName)
   {
     string path = Application.streamingAssetsPath + "/Songs/" + songName + ".json";
     string jsonString = File.ReadAllText(path);
     SongJson songJson = JsonUtility.FromJson<SongJson>(jsonString);
-    return SongJsonToSong(songJson);
+    return songJson;
   }
+
   public static Song SongJsonToSong(SongJson songJson)
   {
+    //Notes
     List<Note> notes = new List<Note>();
     if (songJson.Notes != null)
     {
@@ -24,6 +26,7 @@ public static class JsonToSong
       }
     }
 
+    //Effects
     List<Effect> effects = new List<Effect>();
     if(songJson.Effects != null)
     {
@@ -33,27 +36,12 @@ public static class JsonToSong
         effects.Add(new Effect(type, effectJson.Beat, effectJson.Scale));
       }
     }
-    AudioClip clip = GetSongBackTrack(songJson.Backtrack);
-    Global._IsSongLoaded = true;
+
+    //Audio
+    AudioClip clip = AssetLoader.GetClipFromFile(songJson.Backtrack);
+
     return new Song(notes, effects, clip, songJson.BPM, songJson.NoteSpeed);
   }
-  public static AudioClip GetSongBackTrack(string trackName)
-  {
-    string path = Application.streamingAssetsPath + "/Audio/Backings/" + trackName;
-    if (!File.Exists(path))
-    {
-      return null;
-    }
-    string url = string.Format("file://{0}", path);
-    UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.OGGVORBIS);
-    request.SendWebRequest();
-    while (!request.isDone)
-    {
-    }
-    AudioClip clip = DownloadHandlerAudioClip.GetContent(request);
-    return clip;
-  }
-
 
   public static Note.Direction GetDirection(string input)
   {
@@ -73,7 +61,6 @@ public static class JsonToSong
     {
       return Note.Direction.Right;
     }
-
     return Note.Direction.Up;
   }
 
@@ -86,11 +73,9 @@ public static class JsonToSong
 
     return Effect.EffectType.Zoom;
   }
-
 }
 
-
-//Json versions of notes and songs, only contains needed data.
+#region JsonClasses
 [System.Serializable]
 public class SongJson
 {
@@ -116,3 +101,4 @@ public class EffectJson
   public string Effect = "Zoom";
   public float Scale = 1;
 }
+#endregion

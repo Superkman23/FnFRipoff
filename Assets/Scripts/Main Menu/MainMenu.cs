@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class MainMenu : MonoBehaviour
 {
@@ -22,10 +23,14 @@ public class MainMenu : MonoBehaviour
   public Vector2 _ButtonSize;
   public GameObject _ButtonTemplate;
 
+  SongJson _SongToLoad = null;
+  public bool _IsLoadingSong;
+  public bool _HasLoadedSong;
+
   private void Start()
   {
     Application.targetFrameRate = Global._TargetFrameRate;
-    CreateMenuButtons();
+    CreateSongButtons();
     OpenSongMenu();
     _NoteSpeedSlider.value = Global._NoteSpeedMultiplier;
     _FadeCanvas.alpha = 0;
@@ -33,18 +38,26 @@ public class MainMenu : MonoBehaviour
 
   private void Update()
   {
-    if (Global._IsSongLoaded)
+    if(_SongToLoad != null)
     {
       _FadeCanvas.alpha += Time.deltaTime;
     }
     if(_FadeCanvas.alpha >= 1)
     {
-      Global._IsSongLoaded = false;
-      SceneManager.LoadScene("Game");
+      _FadeCanvas.alpha = 1;
+      if (!_IsLoadingSong)
+      {
+        _IsLoadingSong = true;
+        StartCoroutine(LoadSong(_SongToLoad));
+      }
+      if (_HasLoadedSong)
+      {
+        SceneManager.LoadScene("Game");
+      }
     }
   }
 
-  void CreateMenuButtons()
+  void CreateSongButtons()
   {
     _FileNames = Directory.GetFiles(Application.streamingAssetsPath + "/Songs", "*.json");
 
@@ -76,16 +89,23 @@ public class MainMenu : MonoBehaviour
       newButton.GetComponent<RectTransform>().localPosition = buttonPosition;
       newButton.GetComponentInChildren<Text>().text = _FileNames[i];
       Button button = newButton.GetComponent<Button>();
-      button.onClick.AddListener(() => LoadSong(newButton.name));
+      button.onClick.AddListener(() => LoadSongJson(newButton.name));
     }
   }
-
-  public void LoadSong(string songName)
+  public void LoadSongJson(string songName)
   {
-    Global._PlayingSong = JsonToSong.GetSong(songName);
+    if(_SongToLoad == null)
+      _SongToLoad = JsonToSong.GetSongJson(songName);
+  }
+  public IEnumerator LoadSong(SongJson songToLoad)
+  {
+    Song loadedSong = JsonToSong.SongJsonToSong(songToLoad);
+    yield return loadedSong;
+    Global._PlayingSong = loadedSong;
+    _HasLoadedSong = true;
   }
 
-  #region Menu Buttons
+  #region Constant Menu Buttons
   public void OpenOptionsMenu()
   {
     _OptionsMenu.gameObject.SetActive(true);
