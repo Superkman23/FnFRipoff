@@ -1,6 +1,7 @@
 ﻿{
   "BPM": 120,
   "NoteSpeed": 6,
+  "Backtrack": "Megalovania.ogg",
   "Notes": [
     {
       "Beat": 3,
@@ -89,26 +90,9 @@
       "Key": "Down"
     }
   ],
-  "Backtrack": "Megalovania.ogg",
   "Effects": [
     {
-      "Beat": 0,
-      "Type": "Zoom"
-    },
-    {
       "Beat": 1,
-      "Type": "Zoom"
-    },
-    {
-      "Beat": 2,
-      "Type": "Zoom"
-    },
-    {
-      "Beat": 3,
-      "Type": "Zoom"
-    },
-    {
-      "Beat": 4,
       "Type": "Zoom"
     },
     {
@@ -116,39 +100,11 @@
       "Type": "Zoom"
     },
     {
-      "Beat": 6,
-      "Type": "Zoom"
-    },
-    {
-      "Beat": 7,
-      "Type": "Zoom"
-    },
-    {
-      "Beat": 8,
-      "Type": "Zoom"
-    },
-    {
       "Beat": 9,
       "Type": "Zoom"
     },
     {
-      "Beat": 10,
-      "Type": "Zoom"
-    },
-    {
-      "Beat": 11,
-      "Type": "Zoom"
-    },
-    {
-      "Beat": 12,
-      "Type": "Zoom"
-    },
-    {
       "Beat": 13,
-      "Type": "Zoom"
-    },
-    {
-      "Beat": 14,
       "Type": "Zoom"
     }
   ]
