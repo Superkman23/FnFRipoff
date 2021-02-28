@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class MainMenu : MonoBehaviour
 {
@@ -48,7 +47,7 @@ public class MainMenu : MonoBehaviour
       if (!_IsLoadingSong)
       {
         _IsLoadingSong = true;
-        StartCoroutine(LoadSong(_SongToLoad));
+        LoadSong(_SongToLoad);
       }
       if (_HasLoadedSong)
       {
@@ -97,10 +96,9 @@ public class MainMenu : MonoBehaviour
     if(_SongToLoad == null)
       _SongToLoad = JsonToSong.GetSongJson(songName);
   }
-  public IEnumerator LoadSong(SongJson songToLoad)
+  public void LoadSong(SongJson songToLoad)
   {
     Song loadedSong = JsonToSong.SongJsonToSong(songToLoad);
-    yield return loadedSong;
     Global._PlayingSong = loadedSong;
     _HasLoadedSong = true;
   }
