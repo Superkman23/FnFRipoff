@@ -1,0 +1,36 @@
+TODO:
+- Notes for other side of board
+	- Add a bool for if the note is the player's?
+
+- Music
+	- Vocals
+		- Could be a single track (Like FnF, Rock Band, etc.) or individual syllables (like piano tiles).
+			- Single track
+				- Easy to program
+				- Assets can only be used once
+				- Only one song is needed to load
+				- Needs external program to edit song
+				- Simpler but not as cool (opinion)
+			- Individual syllables
+				- More difficult to program
+				- Reusable assets
+				- Loading of many files required
+				- Allows editing the song in the Json rather than through an external program
+				- Guaranteed sync to beatmap (hitting the note plays the sound)
+				- POSSIBLE PROBLEMS
+					- Each sound someone can make will need an audio file (long a, short e, long o), will each note of each sound need a separate clip? (G long a, B sharp short o, etc.)
+					  If so, file size will increase drastically. If it can be pitch shifted in unity, how can we ensure the sounds arent distored?
+
+- Characters
+	- Effect to move the camera to target a character (or center of them)
+	- Animations
+		- How would sprites be loaded? 
+			Xml file or Json could be used for the sprites, but they might need to be individual files, which could take a long time to load (Not sure)
+		- Up, Down, Right, Left, Idle, and miss sprites for all directions
+		- How to make animations in runtime? might need to use a separate script rather than unity's animation system?
+
+- Asset loading changes
+	- Arrows loaded through streaming assets rather than being "hardcoded"
+
+FINISHED:
+(Only stuff that's on the todo will be here)
